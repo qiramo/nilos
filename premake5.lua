@@ -12,6 +12,14 @@ newoption {
 BuildDir = _MAIN_SCRIPT_DIR .. "/build"
 ObjDir =  BuildDir .. "/objects"
 
+GlobalIncludes =
+	""
+
+CompileOptions =
+	"gcc -c -m32 -nostdlib -ffreestanding -fno-builtin -nostartfiles " ..
+	"-nodefaultlibs -Wall -Wextra -Werror " ..
+	GlobalIncludes
+
 workspace("nilos")
 	location(BuildDir)
 	configurations {

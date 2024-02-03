@@ -8,9 +8,7 @@ project("kernel")
 
 	filter("files:**.c")
 		buildcommands {
-			"gcc -c -m32 -nostdlib -ffreestanding -fno-builtin -nostartfiles\\\
-			-nodefaultlibs -Wall -Wextra -Werror %{file.relpath}\\\
-			-o %{ObjDir}/%{file.basename}.o"
+			CompileOptions .. "%{file.relpath} -o %{ObjDir}/%{file.basename}.o"
 		}
 
 		buildoutputs {
