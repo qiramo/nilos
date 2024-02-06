@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 #include <stdarg.h>
 #include <stdint.h>
 
@@ -19,7 +20,7 @@ void puts(const char* str) {
 	tty_write_string(str);
 }
 
-static void putn(u32 num, i8 base) {
+static void stdio_print_number(u32 num, i8 base) {
 	i8 i = 0;
 	char buf[32];
 	u32 rem;
@@ -70,7 +71,7 @@ void printf(const char* fmt, ...) {
 					case 'd':
 					case 'i':
 						{
-							i32 org = va_arg(args, i32);
+							const i32 org = va_arg(args, i32);
 							u32 num;
 
 							if(org < 0) {
@@ -80,20 +81,20 @@ void printf(const char* fmt, ...) {
 								num = org;
 							}
 
-							putn(num, 10);
+							stdio_print_number(num, 10);
 							break;
 						}
 
 					case 'u':
-						putn(va_arg(args, u32), 10);
+						stdio_print_number(va_arg(args, u32), 10);
 						break;
 
 					case 'x':
-						putn(va_arg(args, u32), 16);
+						stdio_print_number(va_arg(args, u32), 16);
 						break;
 
 					case 'o':
-						putn(va_arg(args, u32), 8);
+						stdio_print_number(va_arg(args, u32), 8);
 						break;
 
 					default:
