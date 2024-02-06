@@ -21,10 +21,10 @@ typedef enum: i8 {
 	TTY_COLOR_WHITE = 15
 } TTY_COLOR;
 
-void terminal_initialize(TTY_COLOR fg, TTY_COLOR bg);
-void terminal_set_font_color(TTY_COLOR col);
+void tty_initialize(TTY_COLOR fg, TTY_COLOR bg);
+void tty_set_font_color(TTY_COLOR col);
 
-void terminal_new_line();
-void terminal_put_char(char c);
-void terminal_write(const char* str, u16 size);
-void terminal_write_string(const char* str);
+void tty_new_line();
+void tty_put_char(char c);
+void tty_write(const char* str, u16 size);
+void tty_write_string(const char* str);

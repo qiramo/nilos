@@ -4,10 +4,10 @@ i8 memcmp(const void* aptr, const void* bptr, u16 size) {
 	const i8* restrict a = (i8*)aptr;
 	const i8* restrict b = (i8*)bptr;
 
-	for(u16 i = 0; i < size; i++) {
-		if(a[i] < b[i]) {
+	while(size--) {
+		if(a[size] < b[size]) {
 			return -1;
-		} else if(a[i] > b[i]) {
+		} else if(a[size] > b[size]) {
 			return 1;
 		}
 	}
@@ -19,25 +19,8 @@ void* memcpy(void* dst, const void* src, u16 size) {
 	i8* restrict a = (i8*)dst;
 	const i8* restrict b = (i8*)src;
 
-	for(u16 i = 0; i < size; i++) {
-		a[i] = b[i];
-	}
-
-	return a;
-}
-
-void* memmove(void* dst, const void* src, u16 size) {
-	i8* restrict a = (i8*)dst;
-	const i8* restrict b = (i8*)src;
-
-	if(dst > src) {
-		for(u16 i = size; i != 0; i--) {
-			a[i - 1] = b[i - 1];
-		}
-	} else {
-		for(u16 i = 0; i < size; i++) {
-			a[i] = b[i];
-		}
+	while(size--) {
+		a[size] = b[size];
 	}
 
 	return a;
@@ -61,4 +44,31 @@ u16 strlen(const char* str) {
 	}
 
 	return len;
+}
+
+i8 strcmp(const char* aptr, const char* bptr) {
+	u16 i = 0;
+
+	while(aptr[i] && bptr[i]) {
+		if(aptr[i] < bptr[i]) {
+			return -1;
+		} else if(aptr[i] > bptr[i]) {
+			return 1;
+		}
+
+		i++;
+	}
+
+	return 0;
+}
+
+char* strcpy(char* dst, const char* src) {
+	u16 i = 0;
+
+	while(dst[i]) {
+		dst[i] = src[i];
+		i++;
+	}
+
+	return dst;
 }

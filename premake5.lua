@@ -17,8 +17,8 @@ GlobalIncludes =
 	"-I" .. _MAIN_SCRIPT_DIR .. "/kernel/inc "
 
 CompileOptions =
-	"gcc -c -m32 -nostdlib -ffreestanding -fno-builtin -nostartfiles " ..
-	"-nodefaultlibs -Wall -Wextra -Werror " ..
+	"gcc -c -m32 -nostdlib -ffreestanding -fno-builtin -fno-stack-protector " ..
+	"-nostartfiles -nodefaultlibs -Wall -Wextra -Werror " ..
 	GlobalIncludes
 
 workspace("nilos")
