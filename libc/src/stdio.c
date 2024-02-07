@@ -2,6 +2,7 @@
 
 #include <stdarg.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include <kernel/tty.h>
 
@@ -10,31 +11,12 @@ typedef enum: i8 {
 	PRINTF_STATE_SPECIFIER
 } PRINTF_STATE;
 
-static const char* HEX_NUMBERS = "0123456789abcdef";
-
 void putc(char c) {
 	tty_put_char(c);
 }
 
 void puts(const char* str) {
 	tty_write_string(str);
-}
-
-static void stdio_print_number(u32 num, i8 base) {
-	i8 i = 0;
-	char buf[32];
-	u32 rem;
-
-	do {
-		rem = num % base;
-		num -= rem;
-		num /= base;
-		buf[i++] = HEX_NUMBERS[rem];
-	} while(num > 0);
-
-	while(i--) {
-		putc(buf[i]);
-	}
 }
 
 void printf(const char* fmt, ...) {
@@ -71,31 +53,51 @@ void printf(const char* fmt, ...) {
 					case 'd':
 					case 'i':
 						{
-							const i32 org = va_arg(args, i32);
-							u32 num;
+							char buf[32];
+							u8 len = itoa(va_arg(args, i32), buf, 10);
 
-							if(org < 0) {
-								putc('-');
-								num = -org;
-							} else {
-								num = org;
+							for(u8 i = 0; i < len; i++) {
+								putc(buf[i]);
 							}
 
-							stdio_print_number(num, 10);
 							break;
 						}
 
 					case 'u':
-						stdio_print_number(va_arg(args, u32), 10);
-						break;
+						{
+							char buf[32];
+							u8 len = utoa(va_arg(args, u32), buf, 10);
+
+							for(u8 i = 0; i < len; i++) {
+								putc(buf[i]);
+							}
+
+							break;
+						}
 
 					case 'x':
-						stdio_print_number(va_arg(args, u32), 16);
-						break;
+						{
+							char buf[32];
+							u8 len = utoa(va_arg(args, u32), buf, 16);
+
+							for(u8 i = 0; i < len; i++) {
+								putc(buf[i]);
+							}
+
+							break;
+						}
 
 					case 'o':
-						stdio_print_number(va_arg(args, u32), 8);
-						break;
+						{
+							char buf[32];
+							u8 len = utoa(va_arg(args, u32), buf, 8);
+
+							for(u8 i = 0; i < len; i++) {
+								putc(buf[i]);
+							}
+
+							break;
+						}
 
 					default:
 						break;

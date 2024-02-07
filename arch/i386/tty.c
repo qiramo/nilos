@@ -62,7 +62,7 @@ static u8 tty_scroll(u8 lines) {
 		tty_buffer_chars[prev_y++] = chars;
 	}
 
-	for(u8 y = VGA_HEIGHT - 1; y > VGA_HEIGHT - lines - 1; y--) {
+	for(u8 y = VGA_HEIGHT - 1; y > (VGA_HEIGHT - lines) - 1; y--) {
 		const u8 chars = tty_buffer_chars[y];
 		const u16 yi = y * VGA_WIDTH;
 
@@ -92,10 +92,11 @@ void tty_put_char(char c) {
 		tty_new_line();
 	}
 
-	if(c == '\n') {
-		tty_add_new_line = true;
-		tty_buffer_chars[tty_row] = tty_column;
-		return;
+	switch(c) {
+		case '\n':
+			tty_add_new_line = true;
+			tty_buffer_chars[tty_row] = tty_column;
+			return;
 	}
 
 	tty_buffer[tty_entry_index++] = vga_entry(c, tty_color);

@@ -20,7 +20,10 @@
 	.global _start
 	_start:
 		movl $stack_top, %esp
+
+		call kernel_early_main
 		call kernel_main
+
 		cli
 
 	halt:
