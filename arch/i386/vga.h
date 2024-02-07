@@ -1,6 +1,6 @@
 #include <stdint.h>
 
-#include <kernel/tty.h>
+#include <nilos/tty.h>
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25

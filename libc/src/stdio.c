@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#include <kernel/tty.h>
+#include <nilos/tty.h>
 
 typedef enum: i8 {
 	PRINTF_STATE_NORMAL,

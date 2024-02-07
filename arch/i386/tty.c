@@ -1,4 +1,4 @@
-#include <kernel/tty.h>
+#include <nilos/tty.h>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -10,11 +10,11 @@ static u8 tty_row;
 static u8 tty_column;
 static u16 tty_entry_index;
 
-static u16 tty_empty;
 static bool tty_add_new_line;
 static u8 tty_buffer_chars[VGA_HEIGHT];
 
 static u8 tty_color;
+static u16 tty_empty;
 static u16* tty_buffer;
 
 void tty_initialize(TTY_COLOR fg, TTY_COLOR bg) {
@@ -22,10 +22,10 @@ void tty_initialize(TTY_COLOR fg, TTY_COLOR bg) {
 	tty_column = 0;
 	tty_entry_index = 0;
 
-	tty_empty = vga_entry(' ', tty_color);
-	tty_add_new_line = false;
-
 	tty_color = vga_entry_color(fg, bg);
+	tty_empty = vga_entry(' ', tty_color);
+
+	tty_add_new_line = false;
 	tty_buffer = VGA_MEMORY;
 
 	for(u8 y = 0; y < VGA_HEIGHT; y++) {
@@ -40,6 +40,7 @@ void tty_initialize(TTY_COLOR fg, TTY_COLOR bg) {
 
 void tty_set_font_color(TTY_COLOR col) {
 	tty_color = vga_entry_color(col, tty_color << 4);
+	tty_empty = vga_entry(' ', tty_color);
 }
 
 static u8 tty_scroll(u8 lines) {
