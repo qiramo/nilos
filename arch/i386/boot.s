@@ -24,9 +24,8 @@
 		call kernel_early_main
 		call kernel_main
 
-		cli
-
 	halt:
+		cli
 		hlt
 		jmp halt
 

@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-typedef i8 bool;
-
-#define true 1
-#define false 0
+typedef enum: i8 {
+	false = 0,
+	true
+} bool;

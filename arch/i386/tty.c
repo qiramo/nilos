@@ -1,4 +1,4 @@
-#include <nilos/tty.h>
+#include <nilos/system/tty.h>
 
 #include <stdbool.h>
 #include <stdint.h>
