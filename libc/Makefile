@@ -1,11 +1,8 @@
-LIBC_SRCS :=\
-	stdlib.c\
-	string.c
-
-LIBC_SRCS := $(addprefix $(LIBCDIR)/src/,$(LIBC_SRCS))
-LIBC_OBJS := $(LIBC_SRCS:%=%.o)
+LIBC_OBJS :=\
+	stdlib.c.o\
+	string.c.o
 
 libc: $(LIBC_OBJS)
 
-%.c.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F)
+$(filter %.c.o,$(LIBC_OBJS)): %.c.o: $(LIBCDIR)/src/%.c
+	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F:%.c.o=%.o)

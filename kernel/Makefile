@@ -1,13 +1,10 @@
-KERNEL_SRCS :=\
-	init/kernel_early_main.c\
-	init/kernel_main.c\
-	system/logger.c\
-	system/panic.c
-
-KERNEL_SRCS := $(addprefix $(KERNELDIR)/src/,$(KERNEL_SRCS))
-KERNEL_OBJS := $(KERNEL_SRCS:%=%.o)
+KERNEL_OBJS :=\
+	init/kernel_early_main.c.o\
+	init/kernel_main.c.o\
+	system/logger.c.o\
+	system/panic.c.o
 
 kernel: $(KERNEL_OBJS)
 
-%.c.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F)
+$(filter %.c.o,$(KERNEL_OBJS)): %.c.o: $(KERNELDIR)/src/%.c
+	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F:%.c.o=%.o)

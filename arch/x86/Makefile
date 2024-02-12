@@ -1,17 +1,14 @@
 CFLAGS += -m32
 
-X86_SRCS :=\
-	boot.s\
-	tty.c
-
-X86_SRCS := $(addprefix $(ARCHDIR)/x86/,$(X86_SRCS))
-X86_OBJS := $(X86_SRCS:%=%.o)
+X86_OBJS :=\
+	boot.s.o\
+	tty.c.o
 
 x86_arch: $(X86_OBJS)
-	@ld -nostdlib -melf_i386 -T $(ARCHDIR)/x86/linker.ld -o $(BUILDDIR)/nilos.elf $(wildcard $(OBJDIR)/*)
+	@ld -nostdlib -melf_i386 -T $(ARCHDIR)/x86/linker.ld -o $(BUILDDIR)/nilos.elf $(wildcard $(OBJDIR)/*.o)
 
-%.s.o: %.s
-	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F)
+$(filter %.s.o,$(X86_OBJS)): %.s.o: $(ARCHDIR)/x86/%.s
+	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F:%.s.o=%.o)
 
-%.c.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F)
+$(filter %.c.o,$(X86_OBJS)): %.c.o: $(ARCHDIR)/x86/%.c
+	@$(CC) $(CFLAGS) -c $< -o $(OBJDIR)/$(@F:%.c.o=%.o)
