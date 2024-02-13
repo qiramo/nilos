@@ -1,15 +1,15 @@
-ROOTDIR := $(dir $(firstword $(MAKEFILE_LIST)))
+ROOT_DIR := $(dir $(firstword $(MAKEFILE_LIST)))
 
-ARCHDIR := $(ROOTDIR)arch
-KERNELDIR := $(ROOTDIR)kernel
-LIBCDIR := $(ROOTDIR)libc
+ARCH_DIR := $(ROOT_DIR)arch
+KERNEL_DIR := $(ROOT_DIR)kernel
+LIBC_DIR := $(ROOT_DIR)libc
 
-BUILDDIR := $(ROOTDIR)build
-OBJDIR := $(BUILDDIR)/obj
+BUILD_DIR := $(ROOT_DIR)build
+OUT_DIR := $(BUILD_DIR)/out
 
 INCLUDES :=\
-	$(LIBCDIR)/inc\
-	$(KERNELDIR)/inc
+	$(LIBC_DIR)/inc\
+	$(KERNEL_DIR)/inc
 
 INCLUDES := $(addprefix -I,$(INCLUDES))
 
@@ -19,14 +19,11 @@ CFLAGS := -nostdlib -ffreestanding -fno-builtin -fno-stack-protector\
 
 .PHONY: clean x86
 
-x86: dirs libc kernel x86_arch
-include $(ARCHDIR)/x86/Makefile
+x86: libc kernel x86_arch
+include $(ARCH_DIR)/x86/Makefile
 
-include $(LIBCDIR)/Makefile
-include $(KERNELDIR)/Makefile
-
-dirs:
-	@mkdir -pv $(OBJDIR)
+include $(LIBC_DIR)/Makefile
+include $(KERNEL_DIR)/Makefile
 
 clean:
-	@rm -rf $(BUILDDIR)
+	@rm -rf $(BUILD_DIR)

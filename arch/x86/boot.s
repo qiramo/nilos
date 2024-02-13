@@ -22,6 +22,8 @@
 		movl $stack_top, %esp
 
 		call kernel_early_main
+		call _init
+
 		call kernel_main
 
 	halt:
