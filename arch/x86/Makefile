@@ -6,6 +6,8 @@ X86_OUT := $(OUT_DIR)/x86
 
 X86_OBJS :=\
 	boot.s.o\
+	gdt.s.o\
+	arch_init.c.o\
 	tty.c.o
 
 x86_arch: crt x86_out $(X86_OBJS)

@@ -1,6 +1,5 @@
 #include <nilos/system/logger.h>
 
-#include <stdarg.h>
 #include <stdlib.h>
 
 #include <nilos/system/tty.h>
@@ -41,7 +40,7 @@ void system_set_log_level(LOG_LEVEL lvl) {
 	log_level = lvl;
 }
 
-static void system_log_format(const char* fmt, va_list args) {
+void system_log_format(const char* fmt, va_list args) {
 	LOG_STATE state = LOG_STATE_NORMAL;
 
 	char c;

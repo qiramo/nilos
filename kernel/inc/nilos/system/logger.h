@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdarg.h>
 #include <stdint.h>
 
 typedef enum: i8 {
@@ -11,6 +12,7 @@ typedef enum: i8 {
 } LOG_LEVEL;
 
 void system_set_log_level(LOG_LEVEL lvl);
+void system_log_format(const char* fmt, va_list args);
 
 void system_log(const char* fmt, ...);
 void system_log_level(LOG_LEVEL lvl, const char* fmt, ...);
